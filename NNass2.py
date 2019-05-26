@@ -1,6 +1,9 @@
 import os
 import matplotlib.image as mpimg
 
+pairs = "pairs=[np.zeros((batch_size, h, w,1)) for i in range(2)] - list of 2, each is shape of [32 (batch), 105, 105, 1]"
+targets = "np.zeros((batch_size,)) - sie of 32 (batch)"
+
 images_pairs_train_text_path = "G:\\My Drive\\BGU\\4th Year\\8th Semester\\Introduction to Deep Learning\\Assignment 2\\Data\\pairsDevTrain.txt"
 images_dir_path = "G:\\My Drive\\BGU\\4th Year\\8th Semester\\Introduction to Deep Learning\\Assignment 2\\Data\\lfw2\\lfw2"
 
