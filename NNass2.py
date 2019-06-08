@@ -1,8 +1,9 @@
 import os
 import matplotlib.image as mpimg
+import numpy as np
 
-pairs = "pairs=[np.zeros((batch_size, h, w,1)) for i in range(2)] - list of 2, each is shape of [32 (batch), 105, 105, 1]"
-targets = "np.zeros((batch_size,)) - sie of 32 (batch)"
+# pairs = "pairs=[np.zeros((batch_size, h, w,1)) for i in range(2)] - list of 2, each is shape of [32 (batch), 105, 105, 1]"
+# targets = "np.zeros((batch_size,)) - sie of 32 (batch)"
 
 images_pairs_train_text_path = "G:\\My Drive\\BGU\\4th Year\\8th Semester\\Introduction to Deep Learning\\Assignment 2\\Data\\pairsDevTrain.txt"
 images_dir_path = "G:\\My Drive\\BGU\\4th Year\\8th Semester\\Introduction to Deep Learning\\Assignment 2\\Data\\lfw2\\lfw2"
@@ -72,5 +73,25 @@ def load_images():
     return x, y
 
 
-x, y = load_images()
+# generates pairs (list of 2 (pair) -> batch size -> image) and targets (0 or 1)
+def generate_pairs_and_targets(batch_size, x, y):
+    # get sizes
+    pairs_amount = len(x)
+    w = len(x[0][0])
+    h = len(x[0][0][0])
 
+    # init
+    pairs = [np.zeros((batch_size, h, w, 1)) for i in range(2)]
+    targets = np.zeros((batch_size,))
+
+    for i in range(0, batch_size):
+        random_pairs_index = np.random.randint(0, pairs_amount)
+        pairs[0][i, :, :, :] = np.array(x[random_pairs_index][0]).reshape((w, h, 1))
+        pairs[1][i, :, :, :] = np.array(x[random_pairs_index][1]).reshape((w, h, 1))
+        targets[i] = y[random_pairs_index]
+
+    return pairs, targets
+
+
+x, y = load_images()
+pairs, targets = generate_pairs_and_targets(batch_size=32, x=x, y=y)
